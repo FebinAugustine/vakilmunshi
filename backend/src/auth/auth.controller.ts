@@ -6,6 +6,23 @@ import { JwtAuthGuard } from './jwt-auth.guard.js';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Post('send-otp')
+  async sendOtp(@Body() body: { email: string; isRegister?: boolean }) {
+    await this.authService.sendOtp(body.email, body.isRegister || false);
+    return { message: 'OTP sent' };
+  }
+
+  @Post('verify-otp')
+  async verifyOtp(
+    @Body() body: { email: string; token: string; isRegister?: boolean },
+  ) {
+    return this.authService.verifyOtp(
+      body.email,
+      body.token,
+      body.isRegister || false,
+    );
+  }
+
   @Post('login')
   async login(@Body() body: { email: string; password: string }) {
     return this.authService.login(body.email, body.password);

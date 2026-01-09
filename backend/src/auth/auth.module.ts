@@ -7,11 +7,13 @@ import { AuthController } from './auth.controller.js';
 import { JwtStrategy } from './jwt.strategy.js';
 import { RefreshTokenService } from './refresh-token.service.js';
 import { JwtAuthGuard } from './jwt-auth.guard.js';
+import { EmailModule } from '../email/email.module.js';
 
 @Module({
   imports: [
     ConfigModule,
     PassportModule,
+    EmailModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({

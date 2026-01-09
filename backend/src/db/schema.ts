@@ -125,6 +125,30 @@ export const legalPoints = pgTable(
   ],
 );
 
+// 6. DRAFTS
+export const drafts = pgTable(
+  'drafts',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    caseId: uuid('case_id')
+      .notNull()
+      .references(() => cases.id),
+    advocateId: uuid('advocate_id')
+      .notNull()
+      .references(() => profiles.id),
+    templateType: text('template_type'),
+    content: text('content'),
+    createdAt: timestamp('created_at').defaultNow(),
+  },
+  (t) => [
+    pgPolicy('advocate_own_drafts', {
+      for: 'all',
+      to: authenticatedRole,
+      using: sql`auth.uid() = advocate_id`,
+    }),
+  ],
+);
+
 // Supabase Auth Internal Link (Mock for Drizzle)
 export const authUsers = pgTable(
   'users',

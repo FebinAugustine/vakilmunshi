@@ -15,6 +15,13 @@
       "when": 1767864758992,
       "tag": "0001_confused_warhawk",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1767872854021,
+      "tag": "0002_deep_metal_master",
+      "breakpoints": true
     }
   ]
 }

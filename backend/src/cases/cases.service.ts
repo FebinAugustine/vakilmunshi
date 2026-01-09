@@ -93,6 +93,14 @@ export class CasesService {
       throw new NotFoundException('Case not found');
     }
 
+    // Cascade delete related records
+    await this.db
+      .delete(schema.hearingDates)
+      .where(eq(schema.hearingDates.caseId, id));
+    await this.db
+      .delete(schema.legalPoints)
+      .where(eq(schema.legalPoints.caseId, id));
+
     await this.db.delete(schema.cases).where(eq(schema.cases.id, id));
   }
 }
